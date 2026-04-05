@@ -7,58 +7,24 @@
 <script src="https://unpkg.com/@leonardosnt/lanyard.js@1.0.1/dist/lanyard.min.js"></script>
 
 <style>
-/* ===== BASE & ENTRY OVERLAY ===== */
+/* ===== BASE ===== */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   background-color: #05070a;
+  background-image: radial-gradient(circle at 50% -20%, #111d35 0%, #05070a 70%);
   color: #ffffff;
-  overflow: hidden; /* Lock scroll until entered */
+  overflow-x: hidden;
 }
 
-#entry-overlay {
+/* ===== SNOW ===== */
+#snow {
   position: fixed;
   inset: 0;
-  background: #05070a;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s;
-}
-
-#entry-button {
-  background: none;
-  border: 1px solid #4a70ff;
-  color: #4a70ff;
-  padding: 15px 40px;
-  font-size: 14px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: 0.3s;
-}
-
-#entry-button:hover {
-  background: rgba(74, 112, 255, 0.1);
-  box-shadow: 0 0 20px rgba(74, 112, 255, 0.3);
-}
-
-.main-content {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: 1s ease;
+  z-index: -1;
+  opacity: 0.3;
   pointer-events: none;
 }
-
-body.entered .main-content {
-  opacity: 1;
-  transform: scale(1);
-  pointer-events: auto;
-}
-
-body.entered { overflow-y: auto; }
 
 /* ===== BENTO GRID ===== */
 .container {
@@ -74,21 +40,39 @@ body.entered { overflow-y: auto; }
     "mindset works discord";
 }
 
-/* ===== CARD & MOBILE HOVER ===== */
+/* ===== LOAD-IN ANIMATION ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
   padding: 25px;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-  /* Touch support for mobile hover */
-  -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0; /* Starts hidden for animation */
 }
 
+/* Staggered delay for each card */
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+.card:nth-child(6) { animation-delay: 0.6s; }
+.card:nth-child(7) { animation-delay: 0.7s; }
+.card:nth-child(8) { animation-delay: 0.8s; }
+
+/* Mobile/Desktop Hover & Active */
 .card:hover, .card:active {
   transform: translateY(-5px);
   border-color: rgba(74, 112, 255, 0.4);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ===== TYPOGRAPHY ===== */
@@ -101,27 +85,22 @@ h3 {
   margin-top: 0;
 }
 
-h1 { margin: 0; font-size: 38px; }
+h1 { margin: 0; font-size: 38px; letter-spacing: -1px; }
 
 /* ===== WORK STATUS LIST ===== */
-.status-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
+.status-list { list-style: none; padding: 0; margin: 0; }
 .status-item {
   display: flex;
   justify-content: space-between;
-  padding: 8px 0;
+  padding: 10px 0;
   font-size: 14px;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.available { color: #00ffa6; font-weight: bold; text-transform: uppercase; font-size: 10px; position: relative; }
+.available { color: #00ffa6; font-weight: bold; text-transform: uppercase; font-size: 10px; }
 .not-available { color: #ff4a4a; font-weight: bold; text-transform: uppercase; font-size: 10px; }
 
-/* Pulse Glow for Available */
+/* Available Pulse Glow */
 .pulse-glow {
   animation: pulse-green 2s infinite;
 }
@@ -132,123 +111,162 @@ h1 { margin: 0; font-size: 38px; }
   100% { text-shadow: 0 0 0px rgba(0, 255, 166, 0); }
 }
 
-/* ===== SOFTWARE SCROLL ===== */
+/* ===== SOFTWARE SCROLL (FAST) ===== */
 .tags-wrapper { overflow: hidden; mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); }
-.tags { display: flex; gap: 10px; width: max-content; animation: scroll 10s linear infinite; }
-.tag { padding: 6px 14px; border-radius: 10px; background: rgba(255,255,255,0.05); font-size: 13px; white-space: nowrap; }
+.tags { display: flex; gap: 10px; width: max-content; animation: scroll 8s linear infinite; }
+.tag { padding: 6px 14px; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); font-size: 13px; white-space: nowrap; }
 
 @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ===== DISCORD LANYARD ===== */
 .discord-card { grid-area: discord; display: flex; align-items: center; gap: 15px; }
-.discord-avatar { width: 50px; height: 50px; border-radius: 50%; background: #222; position: relative; }
+.discord-avatar { width: 55px; height: 55px; border-radius: 50%; background: #1a1a1a; position: relative; background-size: cover; }
 .discord-dot { 
-    position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; 
-    border-radius: 50%; border: 2px solid #05070a; background: #747f8d; 
+  position: absolute; bottom: 2px; right: 2px; width: 14px; height: 14px; 
+  border-radius: 50%; border: 3px solid #0c0e12; background: #747f8d; 
 }
 
-/* Mobile Adjustments */
-@media (max-width: 900px) {
-  .container { grid-template-columns: 1fr 1fr; grid-template-areas: "profile profile" "software software" "connect status" "projects projects" "mindset works" "discord discord"; }
+/* ===== MEDIA QUERIES (FIXED) ===== */
+@media (max-width: 1000px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      "profile profile"
+      "software software"
+      "connect status"
+      "projects projects"
+      "mindset works"
+      "discord discord";
+  }
 }
-@media (max-width: 600px) {
-  .container { grid-template-columns: 1fr; grid-template-areas: "profile" "software" "status" "projects" "connect" "mindset" "works" "discord"; }
+
+@media (max-width: 650px) {
+  .container {
+    padding: 20px;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "profile"
+      "software"
+      "status"
+      "projects"
+      "connect"
+      "mindset"
+      "works"
+      "discord";
+  }
+  h1 { font-size: 32px; }
 }
 
 </style>
 </head>
 <body>
 
-<div id="entry-overlay">
-  <button id="entry-button" onclick="enterSite()">Click to Enter</button>
-</div>
+<canvas id="snow"></canvas>
 
-<div class="main-content">
-  <div class="container">
-    
-    <div class="card profile">
-      <h3>Designer & Developer</h3>
-      <h1>Matt.Himself</h1>
-      <p style="opacity: 0.6; margin-top: 15px;">Crafting polished digital experiences. Consistently rated 5★ by clients.</p>
-    </div>
-
-    <div class="card software">
-      <h3>Softwares Used</h3>
-      <div class="tags-wrapper">
-        <div class="tags">
-          <div class="tag">After Effects</div><div class="tag">Premiere Pro</div>
-          <div class="tag">Figma</div><div class="tag">VS Code</div>
-          <div class="tag">Node.js</div><div class="tag">Python</div>
-          <div class="tag">After Effects</div><div class="tag">Premiere Pro</div>
-          <div class="tag">Figma</div><div class="tag">VS Code</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card status">
-      <h3>Work Status</h3>
-      <div class="status-list">
-        <div class="status-item"><span>Discord Bots</span> <span class="not-available">Not Available</span></div>
-        <div class="status-item"><span>Minecraft Mods</span> <span class="available pulse-glow">Available</span></div>
-        <div class="status-item"><span>Websites</span> <span class="available pulse-glow">Available</span></div>
-        <div class="status-item"><span>ER:LC Assets</span> <span class="available pulse-glow">Available</span></div>
-      </div>
-    </div>
-
-    <div class="card discord-card">
-      <div class="discord-avatar" id="discord-avatar">
-        <div class="discord-dot" id="discord-status"></div>
-      </div>
-      <div>
-        <h3 style="margin-bottom: 5px;">Discord</h3>
-        <div id="discord-name" style="font-weight: bold;">Loading...</div>
-      </div>
-    </div>
-
-    <div class="card connect">
-      <h3>Connect</h3>
-      <p>Commissions →</p>
-      <p>Big Sky Roleplay →</p>
-    </div>
-
-    <div class="card projects">
-      <h3>Recent Projects</h3>
-      <h2 style="font-size: 40px; margin: 0;">200+</h2>
-    </div>
-
-    <div class="card mindset">
-      <h3>Mindset</h3>
-      <p style="font-style: italic; font-size: 14px; color: #4a70ff;">"Your future is created by what you do today."</p>
-    </div>
-
-    <div class="card works">
-      <h3>Works</h3>
-      <h1 style="font-size: 24px;">PORTFOLIO</h1>
-    </div>
-
+<div class="container">
+  
+  <div class="card profile">
+    <h3>Designer & Developer</h3>
+    <h1>Matt.Himself</h1>
+    <p style="opacity: 0.6; margin-top: 15px; font-size: 15px;">Designer, developer, and creator crafting polished digital experiences. Consistently rated 5★ by clients.</p>
   </div>
+
+  <div class="card software">
+    <h3>Softwares Used</h3>
+    <div class="tags-wrapper">
+      <div class="tags">
+        <div class="tag">After Effects</div><div class="tag">Premiere Pro</div><div class="tag">Figma</div>
+        <div class="tag">VS Code</div><div class="tag">Node.js</div><div class="tag">Python</div>
+        <div class="tag">Discord.js</div><div class="tag">HTML5</div>
+        <div class="tag">After Effects</div><div class="tag">Premiere Pro</div><div class="tag">Figma</div>
+        <div class="tag">VS Code</div><div class="tag">Node.js</div><div class="tag">Python</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card status">
+    <h3>Work Status</h3>
+    <div class="status-list">
+      <div class="status-item"><span>Discord Bots</span> <span class="not-available">Not Available</span></div>
+      <div class="status-item"><span>Minecraft Mods</span> <span class="available pulse-glow">Available</span></div>
+      <div class="status-item"><span>Websites</span> <span class="available pulse-glow">Available</span></div>
+      <div class="status-item"><span>ER:LC Assets</span> <span class="available pulse-glow">Available</span></div>
+    </div>
+  </div>
+
+  <div class="card discord-card">
+    <div class="discord-avatar" id="discord-avatar">
+      <div class="discord-dot" id="discord-status"></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom: 5px; color: #5865F2;">Discord</h3>
+      <div id="discord-name" style="font-weight: bold; font-size: 18px;">Loading...</div>
+    </div>
+  </div>
+
+  <div class="card connect">
+    <h3>Connect</h3>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="background: rgba(255,255,255,0.04); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between;">Commissions <span>→</span></div>
+      <div style="background: rgba(255,255,255,0.04); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between;">Big Sky Roleplay <span>→</span></div>
+    </div>
+  </div>
+
+  <div class="card projects">
+    <h3>Recent Projects</h3>
+    <h2 style="font-size: 50px; margin: 0; font-weight: 800;">200+</h2>
+    <p style="opacity: 0.5; font-size: 13px;">Projects delivered across design & dev.</p>
+  </div>
+
+  <div class="card mindset">
+    <h3>Mindset</h3>
+    <p style="font-style: italic; font-size: 15px; color: #4a70ff; line-height: 1.4;">"Your future is created by what you do today, not tomorrow."</p>
+  </div>
+
+  <div class="card works">
+    <h3>Works</h3>
+    <h1 style="font-size: 26px; text-transform: uppercase;">Portfolio</h1>
+    <p style="opacity: 0.5; font-size: 13px; margin-top: 5px;">View all of Matt's work.</p>
+  </div>
+
 </div>
 
 <script>
-// 1. Enter Button Logic
-function enterSite() {
-  document.body.classList.add('entered');
-  document.getElementById('entry-overlay').style.opacity = '0';
-  setTimeout(() => {
-    document.getElementById('entry-overlay').style.visibility = 'hidden';
-  }, 800);
-}
-
-// 2. Animating Title
-let baseTitle = "Matt.Himself ";
+/* 1. ANIMATING TITLE */
+let baseTitle = "Matt.Himself - Developer  ";
 setInterval(() => {
   baseTitle = baseTitle.substring(1) + baseTitle.substring(0, 1);
   document.title = baseTitle;
 }, 200);
 
-// 3. Lanyard Discord Integration
-// Replace 'YOUR_DISCORD_ID' with your actual numerical Discord ID
-const DISCORD_ID = 'YOUR_DISCORD_ID'; 
+/* 2. SNOW EFFECT */
+const canvas = document.getElementById("snow");
+const ctx = canvas.getContext("2d");
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener("resize", resize);
+resize();
+
+let snow = Array.from({ length: 80 }, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  r: Math.random() * 1.5 + 0.5,
+  speed: Math.random() * 0.4 + 0.2
+}));
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(255,255,255,0.3)";
+  snow.forEach(p => {
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+    p.y += p.speed;
+    if (p.y > canvas.height) p.y = 0;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* 3. LANYARD (DISCORD) */
+const DISCORD_ID = 'YOUR_DISCORD_ID'; // <--- Put your ID here!
 
 lanyard({
   userId: DISCORD_ID,
@@ -258,14 +276,9 @@ lanyard({
     const nameText = document.getElementById('discord-name');
     const avatarImg = document.getElementById('discord-avatar');
     
-    // Set Name
     nameText.innerText = data.discord_user.username;
-    
-    // Set Avatar
     avatarImg.style.backgroundImage = `url(https://cdn.discordapp.com/avatars/${data.discord_user.id}/${data.discord_user.avatar}.png)`;
-    avatarImg.style.backgroundSize = 'cover';
 
-    // Set Status Color
     const colors = { online: '#43b581', idle: '#faa61a', dnd: '#f04747', offline: '#747f8d' };
     statusDot.style.background = colors[data.discord_status] || colors.offline;
   }
