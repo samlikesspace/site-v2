@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+
+<style>
+/* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #0a1a3a, #050d1f);
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ===== SNOW ===== */
+#snow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+/* ===== GRID ===== */
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 30px;
+}
+
+@media (max-width: 900px) {
+  .container { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .container { grid-template-columns: 1fr; }
+}
+
+/* ===== CARD ===== */
+.card {
+  background: rgba(20, 30, 60, 0.4);
+  border: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 20px;
+  transition: 0.3s ease;
+}
+
+.card:hover,
+.card:active {
+  transform: scale(1.02);
+  box-shadow: 0 0 25px rgba(0, 150, 255, 0.2);
+}
+
+/* ===== SCROLLING TAGS ===== */
+.tags-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.tags {
+  display: inline-flex;
+  gap: 10px;
+  animation: scroll 20s linear infinite;
+}
+
+.tag {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.tag:hover {
+  transform: scale(1.1);
+  background: rgba(100,150,255,0.2);
+}
+
+/* duplicate makes seamless loop */
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ===== STATUS ===== */
+.status {
+  background: rgba(0,255,150,0.1);
+  color: #00ff9c;
+  padding: 15px 20px;
+  border-radius: 12px;
+  position: relative;
+  width: fit-content;
+}
+
+.status::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  background: #00ff9c;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0,255,150,0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(0,255,150,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,255,150,0); }
+}
+
+/* ===== TEXT ===== */
+h1 { margin: 0; font-size: 28px; }
+p { opacity: 0.8; }
+
+</style>
+</head>
+
+<body>
+
+<canvas id="snow"></canvas>
+
+<div class="container">
+
+  <!-- ABOUT -->
+  <div class="card">
+    <h1>Matt.Himself</h1>
+    <p>Designer, developer, and creator crafting polished digital experiences.</p>
+  </div>
+
+  <!-- SOFTWARE TAGS -->
+  <div class="card">
+    <h3>Softwares Used</h3>
+
+    <div class="tags-wrapper">
+      <div class="tags">
+        <!-- ORIGINAL -->
+        <div class="tag">After Effects</div>
+        <div class="tag">Premiere Pro</div>
+        <div class="tag">Figma</div>
+        <div class="tag">Canva</div>
+        <div class="tag">Blender</div>
+        <div class="tag">VS Code</div>
+        <div class="tag">Node.js</div>
+        <div class="tag">Python</div>
+        <div class="tag">Discord.js</div>
+
+        <!-- DUPLICATE (for seamless loop) -->
+        <div class="tag">After Effects</div>
+        <div class="tag">Premiere Pro</div>
+        <div class="tag">Figma</div>
+        <div class="tag">Canva</div>
+        <div class="tag">Blender</div>
+        <div class="tag">VS Code</div>
+        <div class="tag">Node.js</div>
+        <div class="tag">Python</div>
+        <div class="tag">Discord.js</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STATUS -->
+  <div class="card">
+    <h3>Work Status</h3>
+    <div class="status">Available for projects</div>
+  </div>
+
+</div>
+
+<script>
+/* ===== SNOW ===== */
+const canvas = document.getElementById("snow");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+let snowflakes = Array.from({ length: 100 }, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  r: Math.random() * 3 + 1,
+  d: Math.random() + 1
+}));
+
+function drawSnow() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+  ctx.beginPath();
+
+  snowflakes.forEach(flake => {
+    ctx.moveTo(flake.x, flake.y);
+    ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2);
+  });
+
+  ctx.fill();
+
+  snowflakes.forEach(flake => {
+    flake.y += flake.d;
+    if (flake.y > canvas.height) {
+      flake.y = 0;
+      flake.x = Math.random() * canvas.width;
+    }
+  });
+}
+
+setInterval(drawSnow, 33);
+</script>
+
+</body>
+</html>
