@@ -6,29 +6,42 @@
 <title>Portfolio</title>
 
 <style>
-/* ===== GLOBAL ===== */
+
+/* ===== BASE ===== */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #0a1a3a, #050d1f);
-  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 50% 0%, #0c1b3a 0%, #050b18 60%);
+  color: #dbe7ff;
   overflow-x: hidden;
+}
+
+/* ===== GRID OVERLAY (very subtle) ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: -2;
 }
 
 /* ===== SNOW ===== */
 #snow {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   z-index: -1;
+  opacity: 0.25; /* softer like screenshot */
 }
 
-/* ===== GRID ===== */
+/* ===== LAYOUT ===== */
 .container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 30px;
+  gap: 22px;
+  padding: 40px;
 }
 
 @media (max-width: 900px) {
@@ -41,47 +54,75 @@ body {
 
 /* ===== CARD ===== */
 .card {
-  background: rgba(20, 30, 60, 0.4);
-  border: 1px solid rgba(255,255,255,0.05);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 20px;
-  transition: 0.3s ease;
+  background: rgba(15, 25, 50, 0.55);
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(18px);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow:
+    inset 0 0 20px rgba(255,255,255,0.03),
+    0 10px 30px rgba(0,0,0,0.4);
+  transition: 0.25s ease;
 }
 
-.card:hover,
-.card:active {
-  transform: scale(1.02);
-  box-shadow: 0 0 25px rgba(0, 150, 255, 0.2);
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(100,150,255,0.3);
+  box-shadow:
+    inset 0 0 20px rgba(255,255,255,0.05),
+    0 20px 40px rgba(0,0,0,0.6);
 }
 
-/* ===== SCROLLING TAGS ===== */
+/* ===== HEADINGS ===== */
+h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #eaf2ff;
+  letter-spacing: -0.5px;
+}
+
+h3 {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #5f7cff;
+  margin-bottom: 15px;
+}
+
+p {
+  opacity: 0.75;
+  line-height: 1.5;
+}
+
+/* ===== TAG SCROLLER ===== */
 .tags-wrapper {
   overflow: hidden;
-  white-space: nowrap;
-  position: relative;
+  mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
 }
 
 .tags {
-  display: inline-flex;
+  display: flex;
   gap: 10px;
-  animation: scroll 20s linear infinite;
+  width: max-content;
+  animation: scroll 30s linear infinite;
 }
 
 .tag {
-  padding: 8px 14px;
+  padding: 7px 14px;
   border-radius: 999px;
   background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
+  border: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+  color: #cfe1ff;
+  white-space: nowrap;
+  transition: 0.2s;
 }
 
 .tag:hover {
-  transform: scale(1.1);
-  background: rgba(100,150,255,0.2);
+  background: rgba(100,150,255,0.15);
+  border-color: rgba(100,150,255,0.4);
 }
 
-/* duplicate makes seamless loop */
 @keyframes scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -89,36 +130,30 @@ body {
 
 /* ===== STATUS ===== */
 .status {
-  background: rgba(0,255,150,0.1);
-  color: #00ff9c;
-  padding: 15px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0,255,150,0.08);
+  border: 1px solid rgba(0,255,150,0.2);
+  padding: 10px 16px;
   border-radius: 12px;
-  position: relative;
-  width: fit-content;
+  color: #00ffa6;
+  font-weight: 500;
 }
 
-.status::before {
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 50%;
+.dot {
   width: 8px;
   height: 8px;
-  background: #00ff9c;
+  background: #00ffa6;
   border-radius: 50%;
-  transform: translateY(-50%);
-  animation: pulse 1.5s infinite;
+  animation: pulse 1.6s infinite;
 }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(0,255,150,0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(0,255,150,0); }
+  0% { box-shadow: 0 0 0 0 rgba(0,255,150,0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(0,255,150,0); }
   100% { box-shadow: 0 0 0 0 rgba(0,255,150,0); }
 }
-
-/* ===== TEXT ===== */
-h1 { margin: 0; font-size: 28px; }
-p { opacity: 0.8; }
 
 </style>
 </head>
@@ -129,19 +164,24 @@ p { opacity: 0.8; }
 
 <div class="container">
 
-  <!-- ABOUT -->
+  <!-- PROFILE -->
   <div class="card">
+    <h3>Designer & Developer</h3>
     <h1>Matt.Himself</h1>
-    <p>Designer, developer, and creator crafting polished digital experiences.</p>
+    <p>
+      Designer, developer, and creator crafting polished digital experiences.
+      From branding to advanced Discord systems — consistently rated 5★.
+    </p>
   </div>
 
-  <!-- SOFTWARE TAGS -->
+  <!-- SOFTWARE -->
   <div class="card">
     <h3>Softwares Used</h3>
 
     <div class="tags-wrapper">
       <div class="tags">
-        <!-- ORIGINAL -->
+
+        <!-- LOOP -->
         <div class="tag">After Effects</div>
         <div class="tag">Premiere Pro</div>
         <div class="tag">Figma</div>
@@ -152,7 +192,7 @@ p { opacity: 0.8; }
         <div class="tag">Python</div>
         <div class="tag">Discord.js</div>
 
-        <!-- DUPLICATE (for seamless loop) -->
+        <!-- DUPLICATE -->
         <div class="tag">After Effects</div>
         <div class="tag">Premiere Pro</div>
         <div class="tag">Figma</div>
@@ -162,21 +202,25 @@ p { opacity: 0.8; }
         <div class="tag">Node.js</div>
         <div class="tag">Python</div>
         <div class="tag">Discord.js</div>
+
       </div>
     </div>
-
   </div>
 
   <!-- STATUS -->
   <div class="card">
     <h3>Work Status</h3>
-    <div class="status">Available for projects</div>
+    <div class="status">
+      <div class="dot"></div>
+      Available for projects
+    </div>
   </div>
 
 </div>
 
 <script>
-/* ===== SNOW ===== */
+
+/* ===== SOFT SNOW (accurate) ===== */
 const canvas = document.getElementById("snow");
 const ctx = canvas.getContext("2d");
 
@@ -187,35 +231,35 @@ function resize() {
 resize();
 window.addEventListener("resize", resize);
 
-let snowflakes = Array.from({ length: 100 }, () => ({
+let snow = Array.from({ length: 120 }, () => ({
   x: Math.random() * canvas.width,
   y: Math.random() * canvas.height,
-  r: Math.random() * 3 + 1,
-  d: Math.random() + 1
+  r: Math.random() * 1.5 + 0.5,  // smaller flakes
+  speed: Math.random() * 0.5 + 0.2 // slower
 }));
 
-function drawSnow() {
+function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "white";
-  ctx.beginPath();
+  ctx.fillStyle = "rgba(255,255,255,0.7)";
 
-  snowflakes.forEach(flake => {
-    ctx.moveTo(flake.x, flake.y);
+  snow.forEach(flake => {
+    ctx.beginPath();
     ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2);
-  });
+    ctx.fill();
 
-  ctx.fill();
+    flake.y += flake.speed;
 
-  snowflakes.forEach(flake => {
-    flake.y += flake.d;
     if (flake.y > canvas.height) {
       flake.y = 0;
       flake.x = Math.random() * canvas.width;
     }
   });
+
+  requestAnimationFrame(draw);
 }
 
-setInterval(drawSnow, 33);
+draw();
+
 </script>
 
 </body>
