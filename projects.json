@@ -1,0 +1,28 @@
+{
+  "projects": [
+    {
+      "id": "cafe",
+      "logo": "images/cafe.png",
+      "name": "Café Project",
+      "description": "A cozy UI design project.",
+      "year": "2026",
+      "platform": "Web",
+      "buttons": [
+        { "title": "View Site", "link": "#" },
+        { "title": "GitHub", "link": "#" }
+      ],
+      "updates": [
+        {
+          "name": "Initial Release",
+          "date": "2026-01-10",
+          "description": "First version launched."
+        },
+        {
+          "name": "UI Update",
+          "date": "2026-02-02",
+          "description": "Improved layout and colors."
+        }
+      ]
+    }
+  ]
+}
