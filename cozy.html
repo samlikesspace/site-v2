@@ -3,29 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio</title>
+<title>Matt.Himself - Designer & Developer </title>
 
 <style>
-
 /* ===== BASE ===== */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: radial-gradient(circle at 50% 0%, #0c1b3a 0%, #050b18 60%);
-  color: #dbe7ff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #05070a; /* Deep dark background like image */
+  background-image: radial-gradient(circle at 50% -20%, #111d35 0%, #05070a 70%);
+  color: #ffffff;
   overflow-x: hidden;
-}
-
-/* ===== GRID OVERLAY (very subtle) ===== */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  z-index: -2;
+  min-height: 100vh;
 }
 
 /* ===== SNOW ===== */
@@ -33,233 +22,264 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
-  opacity: 0.25; /* softer like screenshot */
+  opacity: 0.3;
 }
 
-/* ===== LAYOUT ===== */
+/* ===== LAYOUT - BENTO GRID ===== */
 .container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 40px;
+  gap: 20px;
+  /* Defining the specific grid columns/rows from the image */
+  grid-template-columns: 1fr 0.8fr 1.2fr;
+  grid-template-areas: 
+    "profile software software"
+    "connect status projects"
+    "mindset mindset works"
+    "volume volume music";
 }
 
-@media (max-width: 900px) {
-  .container { grid-template-columns: 1fr 1fr; }
+/* Media Query Fixes: Ensures grid stays logical on smaller screens */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      "profile profile"
+      "software software"
+      "connect status"
+      "projects projects"
+      "mindset works"
+      "volume music";
+  }
 }
 
-@media (max-width: 600px) {
-  .container { grid-template-columns: 1fr; }
+@media (max-width: 650px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-template-areas: "profile" "software" "connect" "status" "projects" "mindset" "works" "volume" "music";
+    padding: 20px;
+  }
 }
 
-/* ===== CARD ===== */
+/* ===== CARD STYLING ===== */
 .card {
-  background: rgba(15, 25, 50, 0.55);
-  border: 1px solid rgba(255,255,255,0.06);
-  backdrop-filter: blur(18px);
-  border-radius: 18px;
-  padding: 22px;
-  box-shadow:
-    inset 0 0 20px rgba(255,255,255,0.03),
-    0 10px 30px rgba(0,0,0,0.4);
-  transition: 0.25s ease;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 30px;
+  position: relative;
 }
 
-.card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(100,150,255,0.3);
-  box-shadow:
-    inset 0 0 20px rgba(255,255,255,0.05),
-    0 20px 40px rgba(0,0,0,0.6);
-}
+/* Grid Assignments */
+.profile  { grid-area: profile; }
+.software { grid-area: software; }
+.connect  { grid-area: connect; }
+.status   { grid-area: status; }
+.projects { grid-area: projects; }
+.mindset  { grid-area: mindset; }
+.works    { grid-area: works; }
 
-/* ===== HEADINGS ===== */
-h1 {
-  margin: 0;
-  font-size: 32px;
-  color: #eaf2ff;
-  letter-spacing: -0.5px;
-}
-
+/* ===== TYPOGRAPHY ===== */
+h1 { margin: 0; font-size: 42px; font-weight: 700; letter-spacing: -1px; }
+h2 { font-size: 48px; margin: 10px 0; }
 h3 {
-  font-size: 12px;
-  letter-spacing: 2px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #5f7cff;
-  margin-bottom: 15px;
+  color: #4a70ff; /* Signature Blue */
+  margin-bottom: 20px;
+  margin-top: 0;
 }
+p { opacity: 0.6; line-height: 1.6; font-size: 15px; margin-bottom: 0; }
 
-p {
-  opacity: 0.75;
-  line-height: 1.5;
-}
-
-/* ===== TAG SCROLLER ===== */
+/* ===== SOFTWARE SCROLL (FAST) ===== */
 .tags-wrapper {
   overflow: hidden;
-  mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
-
 .tags {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   width: max-content;
-  animation: scroll 30s linear infinite;
+  animation: scroll 12s linear infinite; /* FASTER SPEED */
 }
-
 .tag {
-  padding: 7px 14px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.05);
+  padding: 8px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 13px;
-  color: #cfe1ff;
-  white-space: nowrap;
-  transition: 0.2s;
 }
-
-.tag:hover {
-  background: rgba(100,150,255,0.15);
-  border-color: rgba(100,150,255,0.4);
-}
-
 @keyframes scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
 
-/* ===== STATUS ===== */
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(0,255,150,0.08);
-  border: 1px solid rgba(0,255,150,0.2);
-  padding: 10px 16px;
+/* ===== UI ELEMENTS ===== */
+.link-row {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px 16px;
   border-radius: 12px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+}
+
+.status-box {
+  border: 1px solid rgba(0, 255, 150, 0.2);
+  background: rgba(0, 255, 150, 0.03);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
   color: #00ffa6;
-  font-weight: 500;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
+.dot { width: 8px; height: 8px; background: #00ffa6; border-radius: 50%; box-shadow: 0 0 10px #00ffa6; }
 
-.dot {
-  width: 8px;
-  height: 8px;
-  background: #00ffa6;
+/* ===== BOTTOM BAR (VOLUME/MUSIC) ===== */
+.volume-area { grid-area: volume; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+.music-area { grid-area: music; background: rgba(255, 255, 255, 0.05); border-radius: 20px; display: flex; align-items: center; gap: 15px; padding: 15px; }
+
+.volume-slider {
+  width: 80%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  position: relative;
+  border-radius: 2px;
+}
+.volume-knob {
+  position: absolute;
+  left: 40%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: #4a70ff;
   border-radius: 50%;
-  animation: pulse 1.6s infinite;
+  box-shadow: 0 0 10px #4a70ff;
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(0,255,150,0.6); }
-  70% { box-shadow: 0 0 0 8px rgba(0,255,150,0); }
-  100% { box-shadow: 0 0 0 0 rgba(0,255,150,0); }
-}
+.album-art { width: 45px; height: 45px; background: #222; border-radius: 8px; }
+.music-info { font-size: 12px; }
+.music-info span { display: block; opacity: 0.5; font-size: 10px; text-transform: uppercase; }
 
 </style>
 </head>
-
 <body>
 
 <canvas id="snow"></canvas>
 
 <div class="container">
-
-  <!-- PROFILE -->
-  <div class="card">
+  <div class="card profile">
     <h3>Designer & Developer</h3>
     <h1>Matt.Himself</h1>
-    <p>
-      Designer, developer, and creator crafting polished digital experiences.
-      From branding to advanced Discord systems — consistently rated 5★.
-    </p>
+    <p>Designer, developer, and creator crafting polished digital experiences. From custom branding to full Discord bots with advanced systems — consistently rated 5★ by clients.</p>
   </div>
 
-  <!-- SOFTWARE -->
-  <div class="card">
+  <div class="card software">
     <h3>Softwares Used</h3>
-
     <div class="tags-wrapper">
       <div class="tags">
-
-        <!-- LOOP -->
-        <div class="tag">After Effects</div>
-        <div class="tag">Premiere Pro</div>
-        <div class="tag">Figma</div>
-        <div class="tag">Canva</div>
-        <div class="tag">Blender</div>
-        <div class="tag">VS Code</div>
-        <div class="tag">Node.js</div>
-        <div class="tag">Python</div>
-        <div class="tag">Discord.js</div>
-
-        <!-- DUPLICATE -->
-        <div class="tag">After Effects</div>
-        <div class="tag">Premiere Pro</div>
-        <div class="tag">Figma</div>
-        <div class="tag">Canva</div>
-        <div class="tag">Blender</div>
-        <div class="tag">VS Code</div>
-        <div class="tag">Node.js</div>
-        <div class="tag">Python</div>
-        <div class="tag">Discord.js</div>
-
+        <div class="tag">After Effects</div><div class="tag">Premiere Pro</div><div class="tag">Figma</div>
+        <div class="tag">Canva</div><div class="tag">Blender</div><div class="tag">VS Code</div>
+        <div class="tag">Node.js</div><div class="tag">Python</div>
+        <div class="tag">After Effects</div><div class="tag">Premiere Pro</div><div class="tag">Figma</div>
+        <div class="tag">Canva</div><div class="tag">Blender</div><div class="tag">VS Code</div>
       </div>
     </div>
   </div>
 
-  <!-- STATUS -->
-  <div class="card">
+  <div class="card connect">
+    <h3>Connect</h3>
+    <a href="#" class="link-row">Commissions <span>→</span></a>
+    <a href="#" class="link-row">Big Sky Roleplay <span>→</span></a>
+  </div>
+
+  <div class="card status">
     <h3>Work Status</h3>
-    <div class="status">
+    <div class="status-box">
       <div class="dot"></div>
-      Available for projects
+      Available for Projects
     </div>
   </div>
 
+  <div class="card projects">
+    <h3>Recent Projects</h3>
+    <h2>200+</h2>
+    <p>Projects Delivered — From custom branding and liveries to full Discord bots with advanced systems.</p>
+  </div>
+
+  <div class="card mindset">
+    <h3>Mindset</h3>
+    <p style="font-style: italic; color: #4a70ff; opacity: 1;">"Your future is created by what you do today, not tomorrow."</p>
+  </div>
+
+  <div class="card works">
+    <h3>Works</h3>
+    <h1 style="font-size: 28px;">PORTFOLIO</h1>
+    <p>View all of Matt's work across design, development, and more.</p>
+  </div>
+
+  <div class="volume-area">
+    <h3 style="margin-bottom: 10px;">Configure Volume</h3>
+    <div class="volume-slider"><div class="volume-knob"></div></div>
+  </div>
+
+  <div class="music-area">
+    <div class="album-art"></div>
+    <div class="music-info">
+      <span>Now Playing</span>
+      <strong>Not You Too</strong><br>Drake
+    </div>
+  </div>
 </div>
 
 <script>
+/* 1. ANIMATING TITLE */
+let baseTitle = "Matt.Himself - Designer & Developer ";
+setInterval(() => {
+  baseTitle = baseTitle.substring(1) + baseTitle.substring(0, 1);
+  document.title = baseTitle;
+}, 150);
 
-/* ===== SOFT SNOW (accurate) ===== */
+/* 2. SNOW EFFECT */
 const canvas = document.getElementById("snow");
 const ctx = canvas.getContext("2d");
-
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resize();
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
 window.addEventListener("resize", resize);
+resize();
 
-let snow = Array.from({ length: 120 }, () => ({
+let snow = Array.from({ length: 100 }, () => ({
   x: Math.random() * canvas.width,
   y: Math.random() * canvas.height,
-  r: Math.random() * 1.5 + 0.5,  // smaller flakes
-  speed: Math.random() * 0.5 + 0.2 // slower
+  r: Math.random() * 1.5 + 0.5,
+  speed: Math.random() * 0.5 + 0.2
 }));
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "rgba(255,255,255,0.7)";
-
-  snow.forEach(flake => {
+  ctx.fillStyle = "rgba(255,255,255,0.3)";
+  snow.forEach(p => {
     ctx.beginPath();
-    ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2);
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fill();
-
-    flake.y += flake.speed;
-
-    if (flake.y > canvas.height) {
-      flake.y = 0;
-      flake.x = Math.random() * canvas.width;
-    }
+    p.y += p.speed;
+    if (p.y > canvas.height) p.y = 0;
   });
-
   requestAnimationFrame(draw);
 }
-
 draw();
-
 </script>
 
 </body>
