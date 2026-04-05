@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matt.Himself - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --accent: #4a70ff;
+            --bg: #05070a;
+            --card-bg: #0c0e14;
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #00ffa6;
+            --danger: #ff4a4a;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* --- BENTO GRID LAYOUT --- */
+        .container {
+            display: grid;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-areas: 
+                "profile profile software"
+                "connect status timezone"
+                "projects projects music";
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 25px;
+            position: relative;
+        }
+
+        .profile  { grid-area: profile; }
+        .software { grid-area: software; }
+        .connect  { grid-area: connect; }
+        .status   { grid-area: status; }
+        .timezone { grid-area: timezone; }
+        .projects { grid-area: projects; }
+        .music    { grid-area: music; }
+
+        h3 {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin: 0 0 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 8px;
+        }
+
+        h1 { margin: 0; font-size: 38px; }
+
+        /* --- CONNECT SECTION --- */
+        .connect-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .connect-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .connect-item i { font-size: 24px; width: 30px; }
+        .connect-item:hover { color: var(--accent); }
+
+        /* --- WORK STATUS --- */
+        .status-list { display: flex; flex-direction: column; gap: 12px; }
+        .status-pill {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-size: 13px;
+        }
+        .indicator {
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .dot { width: 6px; height: 6px; border-radius: 50%; }
+        .dot.available { background: var(--success); box-shadow: 0 0 8px var(--success); color: var(--success); }
+        .dot.closed { background: var(--danger); box-shadow: 0 0 8px var(--danger); color: var(--danger); }
+
+        /* --- PROJECTS SECTION --- */
+        .project-banner {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .join-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* --- UPDATED AUDIO PLAYER --- */
+        .player-container { display: flex; flex-direction: column; gap: 15px; }
+        .song-info { display: flex; align-items: center; gap: 15px; }
+        .album-icon { width: 50px; height: 50px; background: linear-gradient(45deg, #ff0000, #800000); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        
+        .progress-area { width: 100%; }
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+        .progress-current {
+            height: 100%;
+            width: 0%;
+            background: white;
+            border-radius: 2px;
+        }
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-top: 8px;
+            opacity: 0.6;
+            align-items: center;
+        }
+        .play-controls { cursor: pointer; font-size: 14px; }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; grid-template-areas: "profile" "software" "status" "timezone" "connect" "projects" "music"; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card profile">
+        <h1>Matt.Himself</h1>
+        <p style="opacity: 0.6; margin-top: 10px;">Designer and developer crafting advanced Discord systems and websites. 5★ rated creator.</p>
+    </div>
+
+    <div class="card software">
+        <h3>Softwares Used</h3>
+        <p style="font-size: 14px; opacity: 0.8;">After Effects, Figma, VS Code, Node.js, Python...</p>
+    </div>
+
+    <div class="card connect">
+        <h3>Connect</h3>
+        <div class="connect-links">
+            <a href="#" class="connect-item"><i class="fab fa-github"></i> GitHub</a>
+            <a href="#" class="connect-item"><i class="fas fa-envelope"></i> Mail</a>
+            <a href="#" class="connect-item"><i class="fab fa-discord"></i> Discord</a>
+        </div>
+    </div>
+
+    <div class="card status">
+        <h3>Work Status</h3>
+        <div class="status-list">
+            <div class="status-pill">Websites <span class="indicator" style="color:var(--success)"><div class="dot available"></div> Available</span></div>
+            <div class="status-pill">Discord Bots <span class="indicator" style="color:var(--danger)"><div class="dot closed"></div> Closed</span></div>
+            <div class="status-pill">Minecraft <span class="indicator" style="color:var(--success)"><div class="dot available"></div> Available</span></div>
+        </div>
+    </div>
+
+    <div class="card timezone">
+        <h3>Current Time</h3>
+        <h1 id="clock">00:00:00</h1>
+        <p id="activity" style="color:var(--accent); font-weight:bold; font-size:12px; margin-top:5px;">LIKELY CODING</p>
+    </div>
+
+    <div class="card projects">
+        <h3>Projects</h3>
+        <div class="project-banner">
+            <div>
+                <strong style="font-size: 24px;">NSWRP</strong>
+                <p style="opacity: 0.5; margin: 5px 0 0 0;">An RR:LC Private server based in NSW Australia</p>
+            </div>
+            <button class="join-btn">Join!</button>
+        </div>
+    </div>
+
+    <div class="card music">
+        <h3>Now Playing</h3>
+        <div class="player-container">
+            <div class="song-info">
+                <div class="album-icon"><i class="fas fa-wave-square"></i></div>
+                <div>
+                    <strong style="display:block">title</strong>
+                    <span style="opacity:0.5; font-size:12px;">Drake</span>
+                </div>
+            </div>
+            
+            <div class="progress-area">
+                <div class="progress-bar" id="seek-bar">
+                    <div class="progress-current" id="progress-fill"></div>
+                </div>
+                <div class="time-info">
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <i class="fas fa-play play-controls" id="play-pause"></i>
+                        <span id="current-time">00:00</span>
+                    </div>
+                    <span id="total-duration">02:21</span>
+                </div>
+            </div>
+        </div>
+        <audio id="main-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    </div>
+</div>
+
+<script>
+    // --- CLOCK LOGIC ---
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('clock').innerText = now.toLocaleTimeString('en-GB', { hour12: false });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // --- AUDIO PLAYER LOGIC ---
+    const audio = document.getElementById('main-audio');
+    const playPauseBtn = document.getElementById('play-pause');
+    const progressFill = document.getElementById('progress-fill');
+    const currentTimeEl = document.getElementById('current-time');
+    const totalDurationEl = document.getElementById('total-duration');
+
+    playPauseBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            playPauseBtn.classList.replace('fa-play', 'fa-pause');
+        } else {
+            audio.pause();
+            playPauseBtn.classList.replace('fa-pause', 'fa-play');
+        }
+    });
+
+    audio.addEventListener('timeupdate', () => {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = `${progress}%`;
+        
+        // Format time
+        let currentMin = Math.floor(audio.currentTime / 60);
+        let currentSec = Math.floor(audio.currentTime % 60);
+        if(currentSec < 10) currentSec = `0${currentSec}`;
+        currentTimeEl.innerText = `0${currentMin}:${currentSec}`;
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+        let totalMin = Math.floor(audio.duration / 60);
+        let totalSec = Math.floor(audio.duration % 60);
+        if(totalSec < 10) totalSec = `0${totalSec}`;
+        totalDurationEl.innerText = `0${totalMin}:${totalSec}`;
+    });
+</script>
+
+</body>
+</html>
