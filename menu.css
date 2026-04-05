@@ -1,0 +1,126 @@
+/* Popup base */
+#popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: #fffaf0;
+  padding: 25px;
+  border-radius: 20px;
+  width: 320px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 10;
+}
+
+#popup.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: all;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.logo {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+.meta {
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
+/* Overlay */
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s;
+}
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Buttons (flex wrap = auto 1–2 lines) */
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.buttons a {
+  background: #8b6f47;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 0.85em;
+  transition: 0.2s;
+}
+
+.buttons a:hover {
+  background: #a88458;
+  transform: translateY(-2px);
+}
+
+/* Dropdown */
+.dropdown-toggle {
+  margin-top: 15px;
+  background: none;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  text-align: left;
+}
+
+.dropdown.open {
+  max-height: 300px;
+  margin-top: 10px;
+}
+
+/* Update entries */
+.update {
+  background: #f7f2df;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  font-size: 0.85em;
+}
+
+.update span {
+  display: block;
+  opacity: 0.6;
+  font-size: 0.75em;
+}
+
+/* Close button */
+.close {
+  margin-top: 15px;
+  background: #8b6f47;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.close:hover {
+  background: #a88458;
+}
