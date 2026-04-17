@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diamond Skies</title>
+    <title>The Deep Void</title>
     <style>
         body {
             margin: 0;
@@ -21,79 +21,96 @@
         .content {
             z-index: 10;
             text-align: center;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* The Diamond Star Shape */
-        .star {
-            position: absolute;
-            background: white;
-            transform: rotate(45deg); /* Rotates square to diamond */
             pointer-events: none;
         }
 
-        /* Special Glowing Stars */
+        h1 { font-weight: 200; letter-spacing: 8px; opacity: 0.8; }
+
+        /* Base Star Style */
+        .star {
+            position: absolute;
+            background: white;
+            pointer-events: none;
+        }
+
+        /* Shape 1: Standard Dot */
+        .dot { border-radius: 50%; }
+
+        /* Shape 2: Diamond */
+        .diamond { transform: rotate(45deg); }
+
+        /* Shape 3: Curved Diamond (Star-ish) */
+        .curved { 
+            transform: rotate(45deg); 
+            border-radius: 50% 0 50% 0; 
+        }
+
+        /* Rare Glowing Effect */
         .glow {
-            filter: drop-shadow(0 0 4px currentColor);
-            opacity: 1 !important; /* Make sure they are bright */
+            filter: drop-shadow(0 0 6px currentColor);
+            opacity: 1 !important;
+            z-index: 2;
         }
 
         /* Shooting Star */
         .shooting-star {
             position: absolute;
             height: 2px;
-            background: linear-gradient(90deg, white, transparent);
+            background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
             transform: rotate(-35deg);
             pointer-events: none;
-            animation: shoot 2s linear forwards;
+            filter: drop-shadow(0 0 3px white);
+            animation: shoot 1.8s ease-out forwards;
         }
 
         @keyframes shoot {
             0% { transform: translateX(0) translateY(0) rotate(-35deg) scaleX(0); opacity: 1; }
-            100% { transform: translateX(-1000px) translateY(700px) rotate(-35deg) scaleX(1); opacity: 0; }
+            100% { transform: translateX(-1200px) translateY(800px) rotate(-35deg) scaleX(2); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
     <div class="content">
-        <h1>DIAMOND VOID</h1>
-        <p>Monochrome base with rare stellar glows.</p>
+        <h1>CELESTIAL</h1>
     </div>
 
     <script>
         function createStars() {
-            const starCount = 150;
+            const starCount = 180;
             const body = document.body;
-            // A few rare colors
-            const rareColors = ['#00f2ff', '#ff007b', '#beff00', '#7000ff'];
+            
+            // Spacey, rare colors
+            const rareColors = ['#ff00ff', '#00d9ff', '#ff8c00', '#7b00ff', '#00ffaa'];
+            const shapes = ['dot', 'diamond', 'curved'];
 
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
-                star.className = 'star';
                 
-                // Random size (2px to 5px looks better for diamonds)
-                const sizeValue = Math.random() * 3 + 2;
-                const size = sizeValue + 'px';
-                star.style.width = size;
-                star.style.height = size;
+                // Assign a random shape
+                const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+                star.className = `star ${randomShape}`;
+                
+                // Random size
+                const sizeValue = Math.random() * 3 + 1;
+                star.style.width = sizeValue + 'px';
+                star.style.height = sizeValue + 'px';
 
                 // Random position
                 star.style.top = Math.random() * 100 + 'vh';
                 star.style.left = Math.random() * 100 + 'vw';
+                star.style.opacity = Math.random() * 0.7 + 0.1;
 
-                // Random slight opacity for depth
-                star.style.opacity = Math.random();
-
-                // Logic for "A FEW" colored glowing stars (approx 5% chance)
-                if (Math.random() > 0.95) {
+                // Rare colored stars (approx 3% chance)
+                if (Math.random() > 0.97) {
                     const color = rareColors[Math.floor(Math.random() * rareColors.length)];
                     star.classList.add('glow');
                     star.style.backgroundColor = color;
-                    star.style.color = color; // Used by currentColor in CSS
+                    star.style.color = color; // For the drop-shadow
+                    star.style.width = (sizeValue + 1) + 'px'; // Slightly larger
+                    star.style.height = (sizeValue + 1) + 'px';
+                } else {
+                    star.style.backgroundColor = 'white';
                 }
 
                 body.appendChild(star);
@@ -103,20 +120,19 @@
         function spawnShootingStar() {
             const shooter = document.createElement('div');
             shooter.className = 'shooting-star';
-            shooter.style.top = Math.random() * 50 + 'vh';
-            shooter.style.left = (Math.random() * 50 + 50) + 'vw';
-            shooter.style.width = (Math.random() * 100 + 150) + 'px';
+            shooter.style.top = Math.random() * 40 + 'vh';
+            shooter.style.left = (Math.random() * 40 + 60) + 'vw';
+            shooter.style.width = (Math.random() * 150 + 150) + 'px';
             document.body.appendChild(shooter);
-            setTimeout(() => shooter.remove(), 2000);
+            setTimeout(() => shooter.remove(), 1800);
         }
 
-        // Initialize
         createStars();
         
-        // Occasional shooting stars
+        // Randomize shooting star timing
         setInterval(() => {
-            if(Math.random() > 0.7) spawnShootingStar();
-        }, 3000);
+            if(Math.random() > 0.75) spawnShootingStar();
+        }, 4000);
     </script>
 </body>
 </html>
