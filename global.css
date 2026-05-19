@@ -4,15 +4,15 @@
  --light: #ffffff;
  --dark: #000000;
  --grey: #0a0a0c;
- --main: blue;
+ --main: #3498db;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #0a0a0c;
+  background-color: var(--dark);
   color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Geist Mono', Tahoma, Geneva, Verdana, sans-serif;
   height: 100vh;     
   display: flex;
   justify-content: center;
@@ -24,6 +24,34 @@ body {
   position: absolute;
   background: white;
   border-radius: 50%;
-  opacity: 0.8;
+  opacity: 0.5;
  }
     
+ #prompt-area {
+  border: none;
+  border-left: 3px solid var(--main);
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5em;
+  color: white;
+  background: var(--grey);
+  animation: fadeInOut 3s ease-in-out infinite;
+ }
+
+#text-area {
+  text-align: center;
+  display: grid;
+  gap: 10px;
+}
+
+ span {
+  color: var(--main);
+ }
+
+ p {
+  font-size: 1.2em;
+  color: white;
+  margin-top: 20px;
+ }

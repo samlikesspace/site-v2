@@ -1,26 +1,20 @@
-        function createStars() {
-            const starCount = 150; //
-            const body = document.body;
+function message(text) {
+    const area = document.getElementById('prompt-area');
+    const grid = document.getElementById('text-area');
+    const output = document.createElement("p");
+    const command = text.toLowerCase();
 
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                
-                // Random size (1px to 3px)
-                const size = Math.random() * 3 + 'px';
-                star.style.width = size;
-                star.style.height = size;
+    grid.appendChild(document.createElement("span")).textContent = text;
 
-                // Random position
-                star.style.top = Math.random() * 100 + 'vh';
-                star.style.left = Math.random() * 100 + 'vw';
 
-                // Random slight opacity for depth
-                star.style.opacity = Math.random();
+    if (command === 'help') {
+        output.textContent = "Available commands: help, about, contact";
+    } else if (command === 'about') {
+        output.textContent = "This is a simple command-line interface.";
+    } else {
+        output.textContent = "Unknown command. Type 'help' for a list of commands.";
+    }
 
-                body.appendChild(star);
-            }
-        }
-
-        // Run the function on load
-        createStars();
+    grid.appendChild(output);
+    event.target.value = "";
+}
