@@ -18,11 +18,18 @@
 
     <div id="text-area">
         <h1>welcome!</h1>
-        <p>/help /projects</p>
+        <span>please explore by typing a command from the list below</span>
+        <p>/help</p>
+        <p>/projects</p>
+        <p>/contact</p>
 
     </div>
 
-    <input id="prompt-area" type="search" placeholder="> " onkeydown="if(event.key === 'Enter') { message(this.value); }">
-   
+<form onsubmit="event.preventDefault(); message(this.elements[0].value);">
+  <input type="text">
+  <button type="submit">Submit</button>
+</form>
+
+
 </body>
 </html>

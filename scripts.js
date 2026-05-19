@@ -18,3 +18,14 @@ function message(text) {
     grid.appendChild(output);
     event.target.value = "";
 }
+
+
+window.addEventListener('load', () => {     
+    const url = new URLSearchParams(window.location.search);      
+    
+    if (url.has('q')) {
+        const queryValue = url.get('q');
+        message(queryValue);
+    }
+
+});
